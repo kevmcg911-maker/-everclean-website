@@ -1,22 +1,20 @@
 <?php
 declare(strict_types=1);
 
-header('Content-Type: application/json; charset=utf-8');
-
-if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    http_response_code(405);
-    echo json_encode(['success' => false, 'message' => 'Method not allowed.']);
-    exit;
-}
+ini_set('display_errors', '0');
+header('Cache-Control: no-store, max-age=0');
 
 function value(string $key): string {
     return trim((string) ($_POST[$key] ?? ''));
 }
 
-function reply(int $status, bool $success, string $message): void {
-    http_response_code($status);
-    echo json_encode(['success' => $success, 'message' => $message]);
+function redirectToThanks(string $status): void {
+    header('Location: thank-you.html?status=' . rawurlencode($status), true, 303);
     exit;
+}
+
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    redirectToThanks('invalid');
 }
 
 $name = value('name');
@@ -29,14 +27,13 @@ $propertyType = value('property_type');
 $postcode = value('postcode');
 
 if ($name === '' || $phone === '' || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
-    reply(422, false, 'Please provide your name, phone number and a valid email address.');
+    redirectToThanks('invalid');
 }
 
 $recipient = 'kevin@evercleanwcs.co.uk';
 $subject = 'New EverClean enquiry: ' . preg_replace('/[\r\n]+/', ' ', $enquiryType);
 $boundary = 'everclean-' . bin2hex(random_bytes(12));
-$safe = static fn (string $text): string => htmlspecialchars($text, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
-
+$safeName = preg_replace('/[\r\n]+/', ' ', $name);
 $details = [
     'Enquiry type' => $enquiryType,
     'Service' => $service,
@@ -52,9 +49,7 @@ $body = "--{$boundary}\r\n";
 $body .= "Content-Type: text/plain; charset=UTF-8\r\n\r\n";
 $body .= "New enquiry from the EverClean website\r\n\r\n";
 foreach ($details as $label => $detail) {
-    if ($detail !== '') {
-        $body .= "{$label}: {$detail}\r\n";
-    }
+    if ($detail !== '') $body .= "{$label}: {$detail}\r\n";
 }
 
 $allowedMimeTypes = ['image/jpeg', 'image/png', 'image/webp'];
@@ -83,12 +78,12 @@ $body .= "\r\n--{$boundary}--\r\n";
 $headers = [
     'MIME-Version: 1.0',
     "Content-Type: multipart/mixed; boundary=\"{$boundary}\"",
-    'Reply-To: ' . $name . ' <' . $email . '>',
+    'Reply-To: ' . $safeName . ' <' . $email . '>',
     'X-Mailer: EverClean Website',
 ];
 
 if (!mail($recipient, $subject, $body, implode("\r\n", $headers))) {
-    reply(500, false, 'The enquiry email could not be sent.');
+    redirectToThanks('error');
 }
 
-reply(200, true, 'Enquiry sent.');
+redirectToThanks('success');

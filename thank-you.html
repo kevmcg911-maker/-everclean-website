@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex">
+    <title>Thank you | EverClean Exterior Cleaning</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css?v=20260717-2">
+  </head>
+  <body class="thank-you-page">
+    <main class="thank-you-shell">
+      <a href="index.html" class="brand thank-you-logo"><img src="images/logo-transparent.png" alt="EverClean Window Cleaning Services"></a>
+      <section class="thank-you-card" aria-live="polite">
+        <p class="eyebrow">EverClean</p>
+        <h1 data-thanks-title>Thank you — we’ve received your enquiry.</h1>
+        <p data-thanks-copy>We’ll review your details and get back to you as soon as possible.</p>
+        <a class="button button-primary" href="index.html">Back to the homepage <span aria-hidden="true">→</span></a>
+      </section>
+    </main>
+    <script>
+      const status = new URLSearchParams(window.location.search).get('status');
+      if (status === 'error') {
+        document.querySelector('[data-thanks-title]').textContent = 'We couldn’t send your enquiry.';
+        document.querySelector('[data-thanks-copy]').innerHTML = 'Please call <a href="tel:07730875107">07730 875 107</a> or email <a href="mailto:kevin@evercleanwcs.co.uk">kevin@evercleanwcs.co.uk</a>.';
+      } else if (status === 'invalid') {
+        document.querySelector('[data-thanks-title]').textContent = 'A few details are missing.';
+        document.querySelector('[data-thanks-copy]').textContent = 'Please return to the form and complete your name, phone number and email address.';
+      }
+    </script>
+  </body>
+</html>

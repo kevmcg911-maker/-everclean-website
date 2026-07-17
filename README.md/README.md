@@ -23,7 +23,7 @@ The site also supports future asset additions without changing its structure.
 
 ## Contact and quote requests
 
-`contact.php` sends website enquiries to `kevin@evercleanwcs.co.uk`. It accepts up to three optional JPG, PNG or WebP photos (maximum 5 MB each). Test the form after every deployment; some hosting accounts require email sending to be enabled in the hosting control panel.
+`contact.php` sends website enquiries to `kevin@evercleanwcs.co.uk`, then redirects visitors to `thank-you.html`. It accepts up to three optional JPG, PNG or WebP photos (maximum 5 MB each). Test the form after every deployment; some hosting accounts require email sending to be enabled in the hosting control panel.
 
 ## Deployment
 

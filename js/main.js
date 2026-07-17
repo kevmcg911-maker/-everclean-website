@@ -56,33 +56,4 @@ if (quoteForm) {
   quoteForm.querySelectorAll('[data-quote-back]').forEach((button) => button.addEventListener('click', () => showStep(Math.max(quoteStep - 1, 1))));
 }
 
-document.querySelectorAll('.ajax-form').forEach((form) => {
-  form.addEventListener('submit', async (event) => {
-    event.preventDefault();
-    const note = form.querySelector('[data-form-note]');
-    const submit = form.querySelector('button[type="submit"]');
-    submit.disabled = true;
-    note.textContent = 'Sending your enquiry…';
-    note.classList.remove('is-success');
-    try {
-      const response = await fetch(form.action, { method: 'POST', body: new FormData(form), headers: { Accept: 'application/json' } });
-      const responseText = await response.text();
-      let result = null;
-      try { result = JSON.parse(responseText); } catch { /* Hostinger may append non-JSON output after a successful PHP response. */ }
-      if (!response.ok || result?.success === false) throw new Error(result?.message || 'We could not send your enquiry.');
-      form.reset();
-      if (form === quoteForm) {
-        quoteForm.querySelectorAll('.quote-choice.is-selected').forEach((choice) => choice.classList.remove('is-selected'));
-        showStep(1);
-      }
-      note.textContent = 'Thank you — we’ve received your enquiry and will be in touch shortly.';
-      note.classList.add('is-success');
-    } catch (error) {
-      note.textContent = 'Sorry, the form could not send. Please call 07730 875 107 or email kevin@evercleanwcs.co.uk.';
-    } finally {
-      submit.disabled = false;
-    }
-  });
-});
-
 document.querySelector('[data-current-year]').textContent = new Date().getFullYear();
