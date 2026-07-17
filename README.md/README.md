@@ -10,7 +10,8 @@ Open `index.html` in a browser. For the best local preview, install the VS Code 
 
 Place the supplied EverClean assets in `images/` using these filenames:
 
-- `logo.png`
+- `logo.png` (original source)
+- `logo-transparent.png` (transparent cropped version used by the website)
 - `hero-window-cleaning.jpg`
 - `residential-1.jpg`
 - `render-cleaning-1.jpg`
