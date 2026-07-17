@@ -21,9 +21,9 @@ Place the supplied EverClean assets in `images/` using these filenames:
 
 The site also supports future asset additions without changing its structure.
 
-## Contact form note
+## Contact and quote requests
 
-The current form is front-end only. Before launch, connect it to a form service or a small server-side endpoint so enquiries reach `kevin@evercleanwcs.co.uk`.
+`contact.php` sends website enquiries to `kevin@evercleanwcs.co.uk`. It accepts up to three optional JPG, PNG or WebP photos (maximum 5 MB each). Test the form after every deployment; some hosting accounts require email sending to be enabled in the hosting control panel.
 
 ## Deployment
 
