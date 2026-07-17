@@ -25,6 +25,8 @@ $enquiryType = value('enquiry_type') ?: 'Website enquiry';
 $service = value('service');
 $propertyType = value('property_type');
 $postcode = value('postcode');
+$conservatory = value('conservatory');
+$estimate = value('estimate');
 
 if ($name === '' || $phone === '' || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
     redirectToThanks('invalid');
@@ -38,7 +40,9 @@ $details = [
     'Enquiry type' => $enquiryType,
     'Service' => $service,
     'Property type' => $propertyType,
+    'Conservatory' => $conservatory,
     'Postcode' => $postcode,
+    'Estimated regular price' => $estimate,
     'Name' => $name,
     'Phone' => $phone,
     'Email' => $email,

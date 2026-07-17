@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css?v=20260717-2">
+    <link rel="stylesheet" href="css/style.css?v=20260717-5">
   </head>
   <body>
     <a class="skip-link" href="#main-content">Skip to content</a>
@@ -187,22 +187,26 @@
             </fieldset>
 
             <fieldset class="quote-step" data-quote-step="2" hidden>
-              <legend>Tell us about the property.</legend>
+              <legend data-property-question>Tell us about the property.</legend>
+              <p class="quote-helper" data-property-helper>Choose the closest match. We’ll use this to prepare the right quote.</p>
               <input type="hidden" name="property_type" data-quote-value="property_type">
               <div class="choice-grid">
-                <button type="button" class="quote-choice" data-quote-choice="property_type" data-value="Detached house">Detached house</button>
-                <button type="button" class="quote-choice" data-quote-choice="property_type" data-value="Semi-detached house">Semi-detached house</button>
-                <button type="button" class="quote-choice" data-quote-choice="property_type" data-value="Terrace or townhouse">Terrace / townhouse</button>
-                <button type="button" class="quote-choice" data-quote-choice="property_type" data-value="Bungalow">Bungalow</button>
-                <button type="button" class="quote-choice" data-quote-choice="property_type" data-value="Flat or apartment">Flat / apartment</button>
-                <button type="button" class="quote-choice" data-quote-choice="property_type" data-value="Commercial property">Commercial property</button>
+                <button type="button" class="quote-choice" data-quote-choice="property_type" data-property-slot="0" data-value="Detached house">Detached house</button>
+                <button type="button" class="quote-choice" data-quote-choice="property_type" data-property-slot="1" data-value="Semi-detached house">Semi-detached house</button>
+                <button type="button" class="quote-choice" data-quote-choice="property_type" data-property-slot="2" data-value="Terrace or townhouse">Terrace / townhouse</button>
+                <button type="button" class="quote-choice" data-quote-choice="property_type" data-property-slot="3" data-value="Bungalow">Bungalow</button>
+                <button type="button" class="quote-choice" data-quote-choice="property_type" data-property-slot="4" data-value="Flat or apartment">Flat / apartment</button>
+                <button type="button" class="quote-choice" data-quote-choice="property_type" data-property-slot="5" data-value="Commercial property">Commercial property</button>
               </div>
+              <label class="check-option" data-conservatory-option hidden><input type="checkbox" name="conservatory" value="Yes"><span>Include a conservatory <small>Usually an additional £5–£8</small></span></label>
               <label class="field-label">Postcode<input type="text" name="postcode" autocomplete="postal-code" required></label>
               <div class="quote-actions"><button class="button button-secondary" type="button" data-quote-back>Back</button><button class="button button-primary" type="button" data-quote-next>Continue <span aria-hidden="true">→</span></button></div>
             </fieldset>
 
             <fieldset class="quote-step" data-quote-step="3" hidden>
               <legend>Where should we send your quote?</legend>
+              <div class="estimate-panel" data-estimate-panel hidden><span>Estimated regular window-cleaning price</span><strong data-estimate-price></strong><p>Final price is confirmed once we’ve reviewed the property and access.</p></div>
+              <input type="hidden" name="estimate" data-estimate-value>
               <div class="form-row"><label class="field-label">Your name<input type="text" name="name" autocomplete="name" required></label><label class="field-label">Phone number<input type="tel" name="phone" autocomplete="tel" required></label></div>
               <label class="field-label">Email address<input type="email" name="email" autocomplete="email" required></label>
               <label class="field-label">Anything else we should know?<textarea name="message" rows="3" placeholder="For example: access details, conservatory, preferred cleaning frequency."></textarea></label>
@@ -257,6 +261,6 @@
     </footer>
 
     <a class="chat-launcher" href="#quote" aria-label="Start a quote with EverClean" data-chat-launcher><span aria-hidden="true">✦</span> Get a quote</a>
-    <script src="js/main.js?v=20260717-3"></script>
+    <script src="js/main.js?v=20260717-4"></script>
   </body>
 </html>
