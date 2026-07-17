@@ -36,16 +36,22 @@ if (quoteForm) {
     steps.forEach((panel) => { panel.hidden = Number(panel.dataset.quoteStep) !== step; });
     progress.textContent = `Step ${step} of 3`;
   };
+  quoteForm.querySelectorAll('[data-quote-choice]').forEach((choice) => choice.addEventListener('click', () => {
+    const field = choice.dataset.quoteChoice;
+    const value = choice.dataset.value;
+    quoteForm.querySelector(`[data-quote-value="${field}"]`).value = value;
+    quoteForm.querySelectorAll(`[data-quote-choice="${field}"]`).forEach((option) => option.classList.toggle('is-selected', option === choice));
+  }));
   const validateStep = (step) => {
-    const fields = [...quoteForm.querySelectorAll(`[data-quote-step="${step}"] [required]`)];
-    const radioNames = [...new Set(fields.filter((field) => field.type === 'radio').map((field) => field.name))];
-    const radiosValid = radioNames.every((name) => quoteForm.querySelector(`input[name="${name}"]:checked`));
-    const otherFieldsValid = fields.filter((field) => field.type !== 'radio').every((field) => field.reportValidity());
-    return radiosValid && otherFieldsValid;
+    const panel = quoteForm.querySelector(`[data-quote-step="${step}"]`);
+    const choices = [...panel.querySelectorAll('[data-quote-value]')];
+    const choicesValid = choices.every((field) => field.value !== '');
+    const otherFieldsValid = [...panel.querySelectorAll('[required]:not([type="hidden"])')].every((field) => field.reportValidity());
+    return choicesValid && otherFieldsValid;
   };
   quoteForm.querySelectorAll('[data-quote-next]').forEach((button) => button.addEventListener('click', () => {
     if (validateStep(quoteStep)) showStep(Math.min(quoteStep + 1, 3));
-    else quoteForm.querySelector(`[data-quote-step="${quoteStep}"] [required]`)?.focus();
+    else quoteForm.querySelector(`[data-quote-step="${quoteStep}"] .quote-choice, [data-quote-step="${quoteStep}"] [required]`)?.focus();
   }));
   quoteForm.querySelectorAll('[data-quote-back]').forEach((button) => button.addEventListener('click', () => showStep(Math.max(quoteStep - 1, 1))));
 }
@@ -63,7 +69,10 @@ document.querySelectorAll('.ajax-form').forEach((form) => {
       const result = await response.json();
       if (!response.ok || !result.success) throw new Error(result.message || 'We could not send your enquiry.');
       form.reset();
-      if (form === quoteForm) showStep(1);
+      if (form === quoteForm) {
+        quoteForm.querySelectorAll('.quote-choice.is-selected').forEach((choice) => choice.classList.remove('is-selected'));
+        showStep(1);
+      }
       note.textContent = 'Thank you — we’ve received your enquiry and will be in touch shortly.';
       note.classList.add('is-success');
     } catch (error) {
