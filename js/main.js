@@ -66,8 +66,10 @@ document.querySelectorAll('.ajax-form').forEach((form) => {
     note.classList.remove('is-success');
     try {
       const response = await fetch(form.action, { method: 'POST', body: new FormData(form), headers: { Accept: 'application/json' } });
-      const result = await response.json();
-      if (!response.ok || !result.success) throw new Error(result.message || 'We could not send your enquiry.');
+      const responseText = await response.text();
+      let result = null;
+      try { result = JSON.parse(responseText); } catch { /* Hostinger may append non-JSON output after a successful PHP response. */ }
+      if (!response.ok || result?.success === false) throw new Error(result?.message || 'We could not send your enquiry.');
       form.reset();
       if (form === quoteForm) {
         quoteForm.querySelectorAll('.quote-choice.is-selected').forEach((choice) => choice.classList.remove('is-selected'));
