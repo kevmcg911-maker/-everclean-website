@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css?v=20260717-5">
+    <link rel="stylesheet" href="css/style.css?v=20260719-1">
   </head>
   <body>
     <a class="skip-link" href="#main-content">Skip to content</a>
@@ -179,7 +179,8 @@
                 <button type="button" class="quote-choice" data-quote-choice="service" data-value="Window cleaning">Window cleaning</button>
                 <button type="button" class="quote-choice" data-quote-choice="service" data-value="Render cleaning">Render cleaning</button>
                 <button type="button" class="quote-choice" data-quote-choice="service" data-value="Pressure washing">Pressure washing</button>
-                <button type="button" class="quote-choice" data-quote-choice="service" data-value="Gutter or roof cleaning">Gutter or roof cleaning</button>
+                <button type="button" class="quote-choice" data-quote-choice="service" data-value="Gutter cleaning">Gutter cleaning</button>
+                <button type="button" class="quote-choice" data-quote-choice="service" data-value="Roof cleaning">Roof cleaning</button>
                 <button type="button" class="quote-choice" data-quote-choice="service" data-value="Commercial cleaning">Commercial cleaning</button>
                 <button type="button" class="quote-choice" data-quote-choice="service" data-value="Other exterior cleaning">Something else</button>
               </div>
@@ -198,14 +199,14 @@
                 <button type="button" class="quote-choice" data-quote-choice="property_type" data-property-slot="4" data-value="Flat or apartment">Flat / apartment</button>
                 <button type="button" class="quote-choice" data-quote-choice="property_type" data-property-slot="5" data-value="Commercial property">Commercial property</button>
               </div>
-              <label class="check-option" data-conservatory-option hidden><input type="checkbox" name="conservatory" value="Yes"><span>Include a conservatory <small>Usually an additional £5–£8</small></span></label>
+              <label class="check-option" data-add-on-option hidden><input type="checkbox" name="add_on" value="Yes" data-add-on-input><span><b data-add-on-label>Include a conservatory</b><small data-add-on-note>Usually an additional £5–£8</small></span></label>
               <label class="field-label">Postcode<input type="text" name="postcode" autocomplete="postal-code" required></label>
               <div class="quote-actions"><button class="button button-secondary" type="button" data-quote-back>Back</button><button class="button button-primary" type="button" data-quote-next>Continue <span aria-hidden="true">→</span></button></div>
             </fieldset>
 
             <fieldset class="quote-step" data-quote-step="3" hidden>
               <legend>Where should we send your quote?</legend>
-              <div class="estimate-panel" data-estimate-panel hidden><span>Estimated regular window-cleaning price</span><strong data-estimate-price></strong><p>Final price is confirmed once we’ve reviewed the property and access.</p></div>
+              <div class="estimate-panel" data-estimate-panel hidden><span data-estimate-label>Estimated regular window-cleaning price</span><strong data-estimate-price></strong><p>Final price is confirmed once we’ve reviewed the property and access.</p></div>
               <input type="hidden" name="estimate" data-estimate-value>
               <div class="form-row"><label class="field-label">Your name<input type="text" name="name" autocomplete="name" required></label><label class="field-label">Phone number<input type="tel" name="phone" autocomplete="tel" required></label></div>
               <label class="field-label">Email address<input type="email" name="email" autocomplete="email" required></label>
@@ -261,6 +262,6 @@
     </footer>
 
     <a class="chat-launcher" href="#quote" aria-label="Start a quote with EverClean" data-chat-launcher><span aria-hidden="true">✦</span> Get a quote</a>
-    <script src="js/main.js?v=20260717-4"></script>
+    <script src="js/main.js?v=20260719-1"></script>
   </body>
 </html>

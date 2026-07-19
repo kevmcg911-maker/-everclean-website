@@ -33,9 +33,12 @@ if (quoteForm) {
   const progress = quoteForm.querySelector('[data-quote-progress]');
   const propertyQuestion = quoteForm.querySelector('[data-property-question]');
   const propertyHelper = quoteForm.querySelector('[data-property-helper]');
-  const conservatoryOption = quoteForm.querySelector('[data-conservatory-option]');
-  const conservatory = quoteForm.querySelector('[name="conservatory"]');
+  const addOnOption = quoteForm.querySelector('[data-add-on-option]');
+  const addOn = quoteForm.querySelector('[data-add-on-input]');
+  const addOnLabel = quoteForm.querySelector('[data-add-on-label]');
+  const addOnNote = quoteForm.querySelector('[data-add-on-note]');
   const estimatePanel = quoteForm.querySelector('[data-estimate-panel]');
+  const estimateLabel = quoteForm.querySelector('[data-estimate-label]');
   const estimatePrice = quoteForm.querySelector('[data-estimate-price]');
   const estimateValue = quoteForm.querySelector('[data-estimate-value]');
   const propertyInput = quoteForm.querySelector('[data-quote-value="property_type"]');
@@ -57,6 +60,14 @@ if (quoteForm) {
     ['Flat / apartment', 'Flat or apartment'],
     ['Commercial property', 'Commercial property'],
   ];
+  const gutterSideOptions = [
+    ['One side', '1 side'],
+    ['Two sides', '2 sides'],
+    ['Three sides', '3 sides'],
+    ['Four sides', '4 sides'],
+    ['Other / larger property', 'Other property'],
+    ['Commercial property', 'Commercial property'],
+  ];
 
   const setPropertyOptions = (options) => {
     propertyInput.value = '';
@@ -67,8 +78,15 @@ if (quoteForm) {
     });
   };
 
-  const getWindowCleaningEstimate = () => {
-    if (quoteForm.querySelector('[data-quote-value="service"]').value !== 'Window cleaning') return '';
+  const getEstimate = () => {
+    const service = quoteForm.querySelector('[data-quote-value="service"]').value;
+    if (service === 'Gutter cleaning') {
+      const sides = { '1 side': 1, '2 sides': 2, '3 sides': 3, '4 sides': 4 }[propertyInput.value];
+      if (!sides) return { price: '', label: '' };
+      const price = sides * 35 + (addOn.checked ? sides * 20 : 0);
+      return { price: `From \u00A3${price}`, label: 'Starting gutter-cleaning price' };
+    }
+    if (service !== 'Window cleaning') return { price: '', label: '' };
     const prices = {
       'Front only': [10, 10],
       '2-bedroom house': [16, 18],
@@ -77,11 +95,14 @@ if (quoteForm) {
       Townhouse: [25, 25],
     };
     const base = prices[propertyInput.value];
-    if (!base) return '';
-    const extra = conservatory.checked ? [5, 8] : [0, 0];
+    if (!base) return { price: '', label: '' };
+    const extra = addOn.checked ? [5, 8] : [0, 0];
     const low = base[0] + extra[0];
     const high = base[1] + extra[1];
-    return low === high ? `£${low}` : `£${low}–£${high}`;
+    return {
+      price: low === high ? `\u00A3${low}` : `\u00A3${low}\u2013\u00A3${high}`,
+      label: 'Estimated regular window-cleaning price',
+    };
   };
 
   const showStep = (step) => {
@@ -89,10 +110,11 @@ if (quoteForm) {
     steps.forEach((panel) => { panel.hidden = Number(panel.dataset.quoteStep) !== step; });
     progress.textContent = `Step ${step} of 3`;
     if (step === 3) {
-      const estimate = getWindowCleaningEstimate();
-      estimatePanel.hidden = estimate === '';
-      estimatePrice.textContent = estimate;
-      estimateValue.value = estimate;
+      const estimate = getEstimate();
+      estimatePanel.hidden = estimate.price === '';
+      estimateLabel.textContent = estimate.label;
+      estimatePrice.textContent = estimate.price;
+      estimateValue.value = estimate.price;
     }
   };
   quoteForm.querySelectorAll('[data-quote-choice]').forEach((choice) => choice.addEventListener('click', () => {
@@ -102,13 +124,27 @@ if (quoteForm) {
     quoteForm.querySelectorAll(`[data-quote-choice="${field}"]`).forEach((option) => option.classList.toggle('is-selected', option === choice));
     if (field === 'service') {
       const isWindowCleaning = value === 'Window cleaning';
-      propertyQuestion.textContent = isWindowCleaning ? 'What size is the property?' : 'Tell us about the property.';
-      propertyHelper.textContent = isWindowCleaning
-        ? 'Choose the closest match to receive an estimated regular window-cleaning price.'
-        : 'Choose the closest match. We’ll use this to prepare the right quote.';
-      conservatoryOption.hidden = !isWindowCleaning;
-      conservatory.checked = false;
-      setPropertyOptions(isWindowCleaning ? windowPropertyOptions : generalPropertyOptions);
+      const isGutterCleaning = value === 'Gutter cleaning';
+      addOnOption.hidden = !isWindowCleaning && !isGutterCleaning;
+      addOn.checked = false;
+
+      if (isWindowCleaning) {
+        propertyQuestion.textContent = 'What size is the property?';
+        propertyHelper.textContent = 'Choose the closest match to receive an estimated regular window-cleaning price.';
+        addOnLabel.textContent = 'Include a conservatory';
+        addOnNote.textContent = 'Usually an additional \u00A35\u2013\u00A38';
+        setPropertyOptions(windowPropertyOptions);
+      } else if (isGutterCleaning) {
+        propertyQuestion.textContent = 'How many sides need cleaning?';
+        propertyHelper.textContent = 'Exterior gutter cleaning starts from \u00A335 per side. Gutter clearance is \u00A320 per side extra.';
+        addOnLabel.textContent = 'Include clearing out the gutters';
+        addOnNote.textContent = 'Additional \u00A320 per side';
+        setPropertyOptions(gutterSideOptions);
+      } else {
+        propertyQuestion.textContent = 'Tell us about the property.';
+        propertyHelper.textContent = 'Choose the closest match. We’ll use this to prepare the right quote.';
+        setPropertyOptions(generalPropertyOptions);
+      }
     }
   }));
   const validateStep = (step) => {
