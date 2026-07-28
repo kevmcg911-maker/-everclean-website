@@ -162,3 +162,18 @@ if (quoteForm) {
 }
 
 document.querySelector('[data-current-year]').textContent = new Date().getFullYear();
+
+document.querySelectorAll('[data-comparison]').forEach((comparison) => {
+  const range = comparison.querySelector('[data-comparison-range]');
+  const after = comparison.querySelector('[data-comparison-after]');
+  const divider = comparison.querySelector('[data-comparison-divider]');
+
+  const updateComparison = () => {
+    const value = range.value;
+    after.style.clipPath = `inset(0 0 0 ${value}%)`;
+    divider.style.left = `${value}%`;
+  };
+
+  range.addEventListener('input', updateComparison);
+  updateComparison();
+});

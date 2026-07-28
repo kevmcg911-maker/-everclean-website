@@ -16,6 +16,7 @@
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; scroll-padding-top: 5rem; }
 body { margin: 0; background: var(--white); color: var(--ink); font-family: Inter, Arial, sans-serif; font-size: 16px; line-height: 1.6; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
 body.menu-open { overflow: hidden; }
 img { display: block; max-width: 100%; }
 a { color: inherit; text-decoration: none; }
@@ -97,7 +98,7 @@ p { color: var(--muted); }
 .services-note { max-width: 44rem; margin: 4rem auto 0; text-align: center; font-size: .94rem; }
 
 .results-feature { max-width: 57rem; margin: 0 auto; overflow: hidden; border-radius: var(--radius); background: var(--white); box-shadow: var(--shadow); }
-.results-feature img { width: 100%; aspect-ratio: 1 / 1; object-fit: cover; }
+.comparison-slider { position: relative; aspect-ratio: 1 / 1; overflow: hidden; background: var(--navy); touch-action: none; user-select: none; }.comparison-image { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }.comparison-after { position: absolute; inset: 0; clip-path: inset(0 0 0 50%); }.comparison-divider { position: absolute; top: 0; bottom: 0; left: 50%; width: 2px; background: var(--white); transform: translateX(-50%); pointer-events: none; }.comparison-divider span { position: absolute; top: 50%; left: 50%; display: grid; width: 2.8rem; height: 2.8rem; place-items: center; border: 2px solid var(--white); border-radius: 50%; background: var(--navy); color: var(--white); font-size: 1.15rem; font-weight: 800; transform: translate(-50%, -50%); box-shadow: 0 .3rem 1rem rgb(0 0 0 / 24%); }.comparison-label { position: absolute; top: 1rem; z-index: 2; padding: .38rem .6rem; border-radius: 999px; background: rgb(6 32 55 / 74%); color: var(--white); font-size: .72rem; font-weight: 800; letter-spacing: .07em; text-transform: uppercase; pointer-events: none; }.comparison-label-before { left: 1rem; }.comparison-label-after { right: 1rem; }.comparison-range { position: absolute; inset: 0; z-index: 3; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: ew-resize; }.comparison-range:focus-visible { opacity: .01; outline: 3px solid var(--blue); outline-offset: -3px; }
 .results-feature figcaption { display: flex; justify-content: space-between; gap: 1rem; padding: 1rem 1.2rem; color: var(--muted); font-size: .85rem; }
 .results-feature strong { color: var(--ink); }
 

@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css?v=20260719-1">
+    <link rel="stylesheet" href="css/style.css?v=20260728-1">
   </head>
   <body>
     <a class="skip-link" href="#main-content">Skip to content</a>
@@ -118,7 +118,17 @@
             <p>Real EverClean projects. Drag the handle to compare before and after.</p>
           </div>
           <figure class="results-feature">
-            <img src="images/render-before-after.jpg" alt="Before and after render cleaning transformation completed by EverClean" loading="lazy">
+            <div class="comparison-slider" data-comparison>
+              <img class="comparison-image" src="images/render-before.jpg" alt="Render cleaning before treatment" loading="lazy">
+              <div class="comparison-after" data-comparison-after>
+                <img class="comparison-image" src="images/render-after.jpg" alt="Render cleaning after treatment" loading="lazy">
+              </div>
+              <span class="comparison-label comparison-label-before">Before</span>
+              <span class="comparison-label comparison-label-after">After</span>
+              <span class="comparison-divider" data-comparison-divider aria-hidden="true"><span>↔</span></span>
+              <label class="sr-only" for="render-comparison">Drag to compare the render cleaning transformation</label>
+              <input id="render-comparison" class="comparison-range" type="range" min="0" max="100" value="50" aria-label="Drag to compare before and after render cleaning" data-comparison-range>
+            </div>
             <figcaption><strong>Render cleaning</strong><span>A genuine EverClean transformation in South Wales.</span></figcaption>
           </figure>
         </div>
@@ -262,6 +272,6 @@
     </footer>
 
     <a class="chat-launcher" href="#quote" aria-label="Start a quote with EverClean" data-chat-launcher><span aria-hidden="true">✦</span> Get a quote</a>
-    <script src="js/main.js?v=20260719-1"></script>
+    <script src="js/main.js?v=20260728-1"></script>
   </body>
 </html>
